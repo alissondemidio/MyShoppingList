@@ -5,7 +5,7 @@ import {PageHeader, Card} from '../../components';
 import assets from '../../assets/assets';
 
 const Main = () => {
-  const item = assets.gif1;
+  const gif = assets.gif1;
   const color = '#e67e22';
   const buttonText = 'Add Item';
 
@@ -17,7 +17,7 @@ const Main = () => {
           subtitle="Add to the list the items you most desire"
         />
       </View>
-      <Card item={item} color={color} buttonText={buttonText} />
+      <Card gif={gif} color={color} buttonText={buttonText} />
     </View>
   );
 };
