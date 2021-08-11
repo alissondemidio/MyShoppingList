@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet, FlatList} from 'react-native';
-import Separator from '../Separator';
 
 const datas = [
   {
@@ -145,9 +144,10 @@ const Item = ({title}) => (
 
 const Card = ({color, buttonText, data = []}) => {
   const renderItem = ({item}) => (
-    <View>
-      <Item title={item.title} />
-      <Separator />
+    <View style={styles.shoppingList}>
+      <TouchableOpacity>
+        <Item title={item.title} />
+      </TouchableOpacity>
     </View>
   );
   return (
@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#000',
     alignSelf: 'center',
+    marginBottom: 10,
   },
   button: {
     alignSelf: 'center',
@@ -194,11 +195,16 @@ const styles = StyleSheet.create({
     borderRadius: 80,
     width: '80%',
     height: '10%',
+    marginTop: 10,
   },
   buttonText: {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  shoppingList: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#f66',
   },
 });
 

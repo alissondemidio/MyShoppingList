@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import {PageHeader, Card, Separator} from '../../components';
+import {PageHeader, Card} from '../../components';
 import assets from '../../assets/assets';
 
 const Main = () => {
