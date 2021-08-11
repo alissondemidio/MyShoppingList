@@ -15,7 +15,7 @@ const Main = () => {
           subtitle="Add to the list the items you most desire"
         />
       </View>
-      <Card item={item} />
+      <Card item={item} color="#e67e22" />
     </View>
   );
 };
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#e67e22',
   },
   pageHeader: {
-    margin: 30,
+    margin: 20,
+    marginTop: 50,
     justifyContent: 'center',
   },
 });

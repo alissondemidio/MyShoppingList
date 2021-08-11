@@ -1,14 +1,14 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-const Card = () => {
+const Card = ({color}) => {
   return (
     <View style={styles.container}>
       <View style={styles.animation}>
         <Text>Lottie animation</Text>
       </View>
       <TouchableOpacity
-        style={[styles.button, {backgroundColor: '#555'}]}
+        style={[styles.button, {backgroundColor: color}]}
         onPress={() => console.log('ói')}>
         <Text style={styles.buttonText}>buttonText</Text>
       </TouchableOpacity>
@@ -18,15 +18,16 @@ const Card = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     width: '90%',
-    height: '70%',
     backgroundColor: '#fff',
     alignSelf: 'center',
     alignItems: 'center',
-    padding: 5,
+    padding: 20,
     margin: 20,
+    marginBottom: 30,
     borderRadius: 20,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
   },
   animation: {
     height: '60%',
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 80,
     width: '80%',
-    height: '15%',
+    height: '10%',
   },
   buttonText: {
     fontSize: 14,
