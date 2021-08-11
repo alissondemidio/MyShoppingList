@@ -1,11 +1,13 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-import {PageHeader, Card} from '../../components';
+import {PageHeader, Card, Separator} from '../../components';
 import assets from '../../assets/assets';
 
 const Main = () => {
   const item = assets.gif1;
+  const color = '#e67e22';
+  const buttonText = 'Add Item';
 
   return (
     <View style={styles.container}>
@@ -15,7 +17,7 @@ const Main = () => {
           subtitle="Add to the list the items you most desire"
         />
       </View>
-      <Card item={item} color="#e67e22" />
+      <Card item={item} color={color} buttonText={buttonText} />
     </View>
   );
 };

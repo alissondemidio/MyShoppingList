@@ -1,4 +1,5 @@
 import Card from './Card';
 import PageHeader from './PageHeader';
+import Separator from './Separator';
 
-export {Card, PageHeader};
+export {Card, PageHeader, Separator};
