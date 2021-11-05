@@ -11,10 +11,9 @@ import {
 import {useShoppingList} from '../../hooks';
 import {saveEntry} from '../../services/Entries';
 import LottieComponent from '../LottieComponent';
-
 import {getEntries} from '../../services/Entries';
 
-const Card = ({gif, color, buttonText}) => {
+const Card = ({gif, color, buttonText, navigation}) => {
   const [product, setProduct] = useState('');
   const [entries, setEntries] = useState([]);
   const [state, addItem, checkItem, removeItem] = useShoppingList();
@@ -29,15 +28,6 @@ const Card = ({gif, color, buttonText}) => {
 
     loadEntries();
   }, []);
-
-  const save = () => {
-    const value = {
-      product: product,
-    };
-
-    console.log('NewEntry :: save: ', value);
-    saveEntry(value);
-  };
 
   return (
     <View style={styles.container}>
@@ -55,12 +45,12 @@ const Card = ({gif, color, buttonText}) => {
               }}>
               <Text
                 style={[styles.title, item.check ? styles.titleChecked : '']}>
-                {item.product}
+                {item.product} - R{'$' + item.amount}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                removeItem(item.id);
+                navigation.navigate('AddItem');
               }}>
               <Text style={styles.remove}>-</Text>
             </TouchableOpacity>
@@ -76,9 +66,8 @@ const Card = ({gif, color, buttonText}) => {
       />
       <TouchableOpacity
         style={[styles.button, {backgroundColor: color}]}
-        onPress={async () => {
-          save();
-          setProduct('');
+        onPress={() => {
+          navigation.navigate('AddItem');
         }}>
         <Text style={styles.buttonText}>{buttonText}</Text>
       </TouchableOpacity>

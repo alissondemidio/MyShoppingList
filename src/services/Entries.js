@@ -15,15 +15,16 @@ export const getEntries = async () => {
 export const saveEntry = async value => {
   const realm = await getRealm();
   let data = {};
-  const {product} = value;
-  const hashId = await sha256(product);
+  const {product, amount, entryAt} = value;
+  const hashId = await sha256(entryAt);
 
   try {
     realm.write(() => {
       data = {
         id: hashId,
         product: product,
-        amount: 12.4,
+        amount: amount,
+        entryAt: entryAt,
       };
 
       realm.create('Entry', data, true);
