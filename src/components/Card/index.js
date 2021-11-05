@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TouchableOpacity,
@@ -9,11 +9,35 @@ import {
 } from 'react-native';
 
 import {useShoppingList} from '../../hooks';
+import {saveEntry} from '../../services/Entries';
 import LottieComponent from '../LottieComponent';
+
+import {getEntries} from '../../services/Entries';
 
 const Card = ({gif, color, buttonText}) => {
   const [product, setProduct] = useState('');
+  const [entries, setEntries] = useState([]);
   const [state, addItem, checkItem, removeItem] = useShoppingList();
+
+  useEffect(() => {
+    async function loadEntries() {
+      const data = await getEntries();
+
+      console.log(data);
+      setEntries(data);
+    }
+
+    loadEntries();
+  }, []);
+
+  const save = () => {
+    const value = {
+      product: product,
+    };
+
+    console.log('NewEntry :: save: ', value);
+    saveEntry(value);
+  };
 
   return (
     <View style={styles.container}>
@@ -21,7 +45,7 @@ const Card = ({gif, color, buttonText}) => {
         <LottieComponent gif={gif} />
       </View>
       <FlatList
-        data={state}
+        data={entries}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <View style={styles.shoppingList}>
@@ -31,7 +55,7 @@ const Card = ({gif, color, buttonText}) => {
               }}>
               <Text
                 style={[styles.title, item.check ? styles.titleChecked : '']}>
-                {item.title}
+                {item.product}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -45,7 +69,7 @@ const Card = ({gif, color, buttonText}) => {
       />
       <TextInput
         style={styles.input}
-        placeholder={'Adicionar Produto'}
+        placeholder={'Product name'}
         placeholderTextColor="#bbb"
         value={product}
         onChangeText={text => setProduct(text)}
@@ -53,7 +77,7 @@ const Card = ({gif, color, buttonText}) => {
       <TouchableOpacity
         style={[styles.button, {backgroundColor: color}]}
         onPress={async () => {
-          addItem(product);
+          save();
           setProduct('');
         }}>
         <Text style={styles.buttonText}>{buttonText}</Text>

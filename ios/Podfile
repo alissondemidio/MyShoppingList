@@ -12,6 +12,8 @@ target 'MyShoppingList' do
     :hermes_enabled => false
   )
 
+  pod 'RealmJS', :path => '../node_modules/realm'
+
   target 'MyShoppingListTests' do
     inherit! :complete
     # Pods for testing

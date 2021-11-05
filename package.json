@@ -15,7 +15,8 @@
     "lottie-react-native": "^4.0.3",
     "react": "17.0.1",
     "react-native": "0.64.2",
-    "react-native-sha256": "^1.4.7"
+    "react-native-sha256": "^1.4.7",
+    "realm": "^10.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
