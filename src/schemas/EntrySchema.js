@@ -5,7 +5,7 @@ const EntrySchema = {
     id: 'string',
     product: 'string',
     amount: 'double?',
-    entryAt: 'date',
+    entryAt: 'string',
     color: 'string?',
     category: 'Category?',
   },
