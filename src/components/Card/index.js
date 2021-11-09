@@ -4,8 +4,11 @@ import {useFocusEffect} from '@react-navigation/native';
 
 import LottieComponent from '../LottieComponent';
 import {getEntries} from '../../services/Entries';
+import Colors from '../../styles/Colors';
 
-const Card = ({gif, color, buttonText, navigation}) => {
+const colors = Colors;
+
+const Card = ({gif, buttonText, navigation}) => {
   const [entries, setEntries] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -72,8 +75,12 @@ const Card = ({gif, color, buttonText, navigation}) => {
           </View>
         )}
       />
+      <View style={styles.totalView}>
+        <Text style={styles.total}>Total:</Text>
+        <Text style={styles.total}>R$ 7643.00</Text>
+      </View>
       <TouchableOpacity
-        style={[styles.button, {backgroundColor: color}]}
+        style={styles.button}
         onPress={() => {
           navigation.navigate('AddItem');
         }}>
@@ -87,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '90%',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     alignSelf: 'center',
     padding: 20,
     margin: 20,
@@ -109,14 +116,15 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '10%',
     marginTop: 10,
+    backgroundColor: colors.darkGreen,
   },
   buttonText: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.white,
   },
   category: {
-    backgroundColor: 'green',
+    backgroundColor: colors.darkOrange,
     width: 10,
     height: 10,
     marginRight: 20,
@@ -126,26 +134,36 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingVertical: 8,
   },
   shoppingList: {
     borderBottomWidth: 1,
-    borderBottomColor: '#f66',
+    borderBottomColor: colors.darkTurquoise,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
   title: {
     fontSize: 18,
-    color: '#000',
+    color: colors.black,
     alignSelf: 'stretch',
   },
   titleChecked: {
     textDecorationLine: 'line-through',
-    color: '#ccc',
+    color: colors.light,
   },
   input: {
     fontSize: 18,
-    color: '#000',
+    color: colors.black,
+  },
+  totalView: {
+    margin: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  total: {
+    fontSize: 20,
+    fontWeight: '700',
   },
 });
 
