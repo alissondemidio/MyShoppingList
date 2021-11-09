@@ -17,8 +17,20 @@ const Tab = createBottomTabNavigator();
 function Home() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Main" component={Main} />
-      <Tab.Screen name="Statistics" component={Statistics} />
+      <Tab.Screen
+        name="Main"
+        component={Main}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Statistics"
+        component={Statistics}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 }
