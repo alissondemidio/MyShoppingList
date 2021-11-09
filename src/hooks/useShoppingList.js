@@ -2,7 +2,14 @@ import {useReducer} from 'react';
 
 import {sha256} from 'react-native-sha256';
 
-const initialState = [];
+const initialState = {
+  id: '',
+  product: '',
+  amount: '',
+  entryAt: '',
+  color: '',
+  category: 'Category?',
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -30,6 +37,7 @@ export default () => {
 
   const addItem = async title => {
     const hashId = await sha256(title);
+    let date = new Date();
 
     dispatch({
       type: 'ADD',
