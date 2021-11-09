@@ -6,19 +6,30 @@
  * @flow strict-local
  */
 import React from 'react';
-import {Main, AddItem} from './pages';
+import {Main, AddItem, Statistics} from './pages';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function Home() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Main" component={Main} />
+      <Tab.Screen name="Statistics" component={Statistics} />
+    </Tab.Navigator>
+  );
+}
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator>
         <Stack.Screen
-          name="Main"
-          component={Main}
+          name="Home"
+          component={Home}
           options={{
             headerShown: false,
             presentation: 'modal',
