@@ -10,8 +10,10 @@ import {
 import {saveEntry, deleteEntry} from '../../services/Entries';
 import {LottieComponent} from '../../components';
 import assets from '../../assets/assets';
+import Colors from '../../styles/Colors';
 
 const gif = assets.gif1;
+const colors = Colors;
 
 const AddItem = ({route, navigation}) => {
   let date = new Date();
@@ -20,7 +22,7 @@ const AddItem = ({route, navigation}) => {
     : {
         id: null,
         product: '',
-        amount: 0,
+        amount: '',
         entryAt: date.toString(),
       };
 
@@ -28,7 +30,7 @@ const AddItem = ({route, navigation}) => {
   const [amount, setAmount] = useState(`${entry.amount}`);
 
   const isValid = () => {
-    if (parseFloat(amount) > 0) {
+    if (parseFloat(amount) > 0 && product !== '') {
       return true;
     } else {
       return false;
@@ -66,43 +68,60 @@ const AddItem = ({route, navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.animation}>
-        <LottieComponent gif={gif} loop={true} />
-      </View>
-      <Text>AddItem</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={'Nome do Produto'}
-        placeholderTextColor="#bbb"
-        value={product}
-        onChangeText={text => setProduct(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder={'Preço Médio do Produto'}
-        placeholderTextColor="#bbb"
-        value={amount}
-        onChangeText={text => setAmount(text)}
-      />
-      {/*<TextInput
-        style={styles.input}
-        placeholder={'Categoria do Produto'}
-        placeholderTextColor="#bbb"
-        value={category}
-        onChangeText={text => setCategory(text)}
-      />*/}
-      <TouchableOpacity
-        style={[styles.button, isValid() ? styles.isValid : '']}
-        onPress={() => {
-          isValid() && onSave();
-        }}>
-        <Text style={styles.buttonText}>Adicionar Produto</Text>
-      </TouchableOpacity>
-      {entry.id !== null && (
-        <TouchableOpacity style={styles.button} onPress={onDelete}>
-          <Text style={styles.buttonText}>Remover Produto</Text>
+      <View style={styles.card}>
+        <View style={styles.animation}>
+          <LottieComponent gif={gif} loop={true} />
+        </View>
+        {entry.id === null ? (
+          <Text style={styles.pageTitle}>Adicionar Produto</Text>
+        ) : (
+          <Text style={styles.pageTitle}>Atualizar Produto</Text>
+        )}
+        <TextInput
+          style={styles.input}
+          placeholder={'Nome do Produto'}
+          placeholderTextColor="#bbb"
+          value={product}
+          onChangeText={text => setProduct(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={'Preço Médio do Produto'}
+          placeholderTextColor="#bbb"
+          value={amount}
+          onChangeText={text => setAmount(text)}
+        />
+        {/*<TextInput
+          style={styles.input}
+          placeholder={'Categoria do Produto'}
+          placeholderTextColor="#bbb"
+          value={category}
+          onChangeText={text => setCategory(text)}
+        />*/}
+        <View style={styles.bottomButtons}>
+          <TouchableOpacity
+            style={[styles.button, isValid() ? styles.isValid : '']}
+            onPress={() => {
+              isValid() && onSave();
+            }}>
+            {entry.id === null ? (
+              <Text style={styles.buttonText}>Adicionar Produto</Text>
+            ) : (
+              <Text style={styles.buttonText}>Atualizar Produto</Text>
+            )}
+          </TouchableOpacity>
+          {entry.id !== null && (
+            <TouchableOpacity
+              style={[styles.button, styles.isValid]}
+              onPress={onDelete}>
+              <Text style={styles.buttonText}>Remover Produto</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+        <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+          <Text style={styles.cancelText}>Cancelar</Text>
         </TouchableOpacity>
-      )}
+      </View>
     </View>
   );
 };
@@ -110,14 +129,16 @@ const AddItem = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.background,
+    justifyContent: 'center',
+  },
+  card: {
     width: '90%',
-    backgroundColor: '#fff',
-    alignSelf: 'center',
+    height: '70%',
+    backgroundColor: colors.white,
     padding: 20,
     margin: 20,
-    marginBottom: 30,
-    borderRadius: 20,
-    justifyContent: 'space-between',
+    borderRadius: 30,
   },
   animation: {
     height: '20%',
@@ -125,50 +146,51 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10,
   },
+  bottomButtons: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
   button: {
-    alignSelf: 'center',
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 80,
-    width: '80%',
-    height: '10%',
+    marginHorizontal: 10,
+    padding: 10,
+    height: 50,
     marginTop: 10,
-    backgroundColor: '#0000ff22',
+    backgroundColor: colors.primaryLowOpacity,
   },
   buttonText: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#fff',
+    color: colors.white,
+  },
+  cancelButton: {
+    alignSelf: 'center',
+  },
+  cancelText:{
+    color: colors.blue,
   },
   isValid: {
-    backgroundColor: '#0000ff',
-  },
-  shoppingList: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f66',
+    backgroundColor: colors.darkGreen,
   },
   title: {
     fontSize: 18,
-    color: '#000',
+    color: colors.black,
   },
-  titleChecked: {
-    textDecorationLine: 'line-through',
-    color: '#ccc',
+  pageTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.black,
+    margin: 20,
   },
   input: {
     fontSize: 18,
-    color: '#000',
-  },
-  remove: {
-    color: 'white',
-    fontSize: 18,
-    margin: 6,
-    backgroundColor: 'red',
-    borderRadius: 20,
-    paddingHorizontal: 10,
+    color: colors.black,
   },
 });
 
