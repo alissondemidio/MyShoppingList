@@ -1,33 +1,34 @@
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  FlatList,
-  TextInput,
-} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {View, TouchableOpacity, Text, StyleSheet, FlatList} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 
-import {useShoppingList} from '../../hooks';
-import {saveEntry} from '../../services/Entries';
 import LottieComponent from '../LottieComponent';
 import {getEntries} from '../../services/Entries';
 
-const Card = ({gif, color, buttonText, navigation}) => {
-  const [product, setProduct] = useState('');
+const Card = ({gif, color, buttonText, navigation, route}) => {
   const [entries, setEntries] = useState([]);
-  const [state, addItem, checkItem, removeItem] = useShoppingList();
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
-  useEffect(() => {
-    async function loadEntries() {
-      const data = await getEntries();
+  const loadEntries = async () => {
+    const data = await getEntries();
+    setEntries(data);
+  };
 
-      console.log(data);
-      setEntries(data);
-    }
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchData() {
+        const data = await getEntries();
+        setEntries(data);
+      }
+      fetchData();
+    }, []),
+  );
 
+  function onRefresh() {
+    setIsRefreshing(true);
     loadEntries();
-  }, []);
+    setIsRefreshing(false);
+  }
 
   return (
     <View style={styles.container}>
@@ -37,32 +38,39 @@ const Card = ({gif, color, buttonText, navigation}) => {
       <FlatList
         data={entries}
         keyExtractor={item => item.id}
+        onRefresh={onRefresh}
+        refreshing={isRefreshing}
         renderItem={({item}) => (
           <View style={styles.shoppingList}>
-            <TouchableOpacity
-              onPress={() => {
-                checkItem(item.id);
-              }}>
-              <Text
-                style={[styles.title, item.check ? styles.titleChecked : '']}>
-                {item.product} - R{'$' + item.amount}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('AddItem');
-              }}>
-              <Text style={styles.remove}>-</Text>
-            </TouchableOpacity>
+            <View style={styles.category} />
+            <View style={styles.item}>
+              <TouchableOpacity
+                onPress={() => {
+                  const entriesToJSON = JSON.parse(JSON.stringify(item));
+                  navigation.navigate('AddItem', {
+                    entry: entriesToJSON,
+                  });
+                }}>
+                <Text
+                  style={[styles.title, item.check ? styles.titleChecked : '']}>
+                  {item.product}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  const entriesToJSON = JSON.parse(JSON.stringify(item));
+                  navigation.navigate('AddItem', {
+                    entry: entriesToJSON,
+                  });
+                }}>
+                <Text
+                  style={[styles.title, item.check ? styles.titleChecked : '']}>
+                  R$ {parseFloat(item.amount).toFixed(2)}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder={'Product name'}
-        placeholderTextColor="#bbb"
-        value={product}
-        onChangeText={text => setProduct(text)}
       />
       <TouchableOpacity
         style={[styles.button, {backgroundColor: color}]}
@@ -107,16 +115,29 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
   },
-  shoppingList: {
+  category: {
+    backgroundColor: 'green',
+    width: 10,
+    height: 10,
+    marginRight: 20,
+    borderRadius: 400,
+  },
+  item: {
+    flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  shoppingList: {
     borderBottomWidth: 1,
     borderBottomColor: '#f66',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   title: {
     fontSize: 18,
     color: '#000',
+    alignSelf: 'stretch',
   },
   titleChecked: {
     textDecorationLine: 'line-through',
@@ -125,14 +146,6 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 18,
     color: '#000',
-  },
-  remove: {
-    color: 'white',
-    fontSize: 18,
-    margin: 6,
-    backgroundColor: 'red',
-    borderRadius: 20,
-    paddingHorizontal: 10,
   },
 });
 

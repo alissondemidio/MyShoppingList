@@ -4,7 +4,7 @@ import {View, StyleSheet} from 'react-native';
 import {PageHeader, Card} from '../../components';
 import assets from '../../assets/assets';
 
-const Main = ({navigation}) => {
+const Main = ({navigation, route}) => {
   const gif = assets.gif1;
   const color = '#e67e22';
   const buttonText = 'Add Item';
@@ -22,6 +22,7 @@ const Main = ({navigation}) => {
         color={color}
         buttonText={buttonText}
         navigation={navigation}
+        route={route}
       />
     </View>
   );
