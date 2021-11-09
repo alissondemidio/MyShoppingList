@@ -25,6 +25,7 @@ const Colors = {
   darkCarbon: '#3b3a3e',
 
   primary: '#3498db',
+  primaryLowOpacity: '#2ecc7133',
   secondary: '#2ecc71',
   danger: '#f37272',
   light: '#ecf0f1',
