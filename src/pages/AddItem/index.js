@@ -7,22 +7,58 @@ import {
   View,
 } from 'react-native';
 
-import {saveEntry} from '../../services/Entries';
+import {saveEntry, deleteEntry} from '../../services/Entries';
 import {LottieComponent} from '../../components';
 
-const AddItem = ({navigation}) => {
-  const [product, setProduct] = useState('');
-  const [amount, setAmount] = useState('');
+const AddItem = ({route, navigation}) => {
+  let date = new Date();
+  const entry = route.params?.entry
+    ? route.params.entry
+    : {
+        id: null,
+        product: '',
+        amount: 0,
+        entryAt: date.toString(),
+      };
 
-  const save = () => {
+  const [product, setProduct] = useState(entry.product);
+  const [amount, setAmount] = useState(`${entry.amount}`);
+
+  const isValid = () => {
+    if (parseFloat(amount) > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const onClose = () => {
+    navigation.navigate({
+      name: 'Main',
+      params: {update: true},
+      merge: true,
+    });
+  };
+
+  const onSave = async () => {
+    date = new Date();
     const value = {
+      id: entry.id,
       product: product,
       amount: parseFloat(amount),
-      entryAt: new Date(),
+      entryAt: date.toString(),
     };
 
     console.log('NewEntry :: save: ', value);
-    saveEntry(value);
+    await saveEntry(value);
+    setProduct('');
+    setAmount('');
+    onClose();
+  };
+
+  const onDelete = () => {
+    deleteEntry(entry);
+    onClose();
   };
 
   return (
@@ -54,13 +90,13 @@ const AddItem = ({navigation}) => {
       />*/}
       <TouchableOpacity
         style={styles.button}
-        onPress={async () => {
-          save();
-          setProduct('');
-          setAmount('');
-          navigation.goBack();
+        onPress={() => {
+          isValid() && onSave();
         }}>
         <Text style={styles.buttonText}>Adicionar Produto</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={onDelete}>
+        <Text style={styles.buttonText}>Remover Produto</Text>
       </TouchableOpacity>
     </View>
   );
