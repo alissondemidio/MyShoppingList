@@ -9,6 +9,9 @@ import {
 
 import {saveEntry, deleteEntry} from '../../services/Entries';
 import {LottieComponent} from '../../components';
+import assets from '../../assets/assets';
+
+const gif = assets.gif1;
 
 const AddItem = ({route, navigation}) => {
   let date = new Date();
@@ -64,7 +67,7 @@ const AddItem = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.animation}>
-        <LottieComponent />
+        <LottieComponent gif={gif} loop={true} />
       </View>
       <Text>AddItem</Text>
       <TextInput
@@ -89,15 +92,17 @@ const AddItem = ({route, navigation}) => {
         onChangeText={text => setCategory(text)}
       />*/}
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, isValid() ? styles.isValid : '']}
         onPress={() => {
           isValid() && onSave();
         }}>
         <Text style={styles.buttonText}>Adicionar Produto</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={onDelete}>
-        <Text style={styles.buttonText}>Remover Produto</Text>
-      </TouchableOpacity>
+      {entry.id !== null && (
+        <TouchableOpacity style={styles.button} onPress={onDelete}>
+          <Text style={styles.buttonText}>Remover Produto</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -128,12 +133,15 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '10%',
     marginTop: 10,
-    backgroundColor: 'red',
+    backgroundColor: '#0000ff22',
   },
   buttonText: {
     fontSize: 14,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  isValid: {
+    backgroundColor: '#0000ff',
   },
   shoppingList: {
     flexDirection: 'row',

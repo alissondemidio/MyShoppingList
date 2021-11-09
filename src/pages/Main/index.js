@@ -5,7 +5,7 @@ import {PageHeader, Card} from '../../components';
 import assets from '../../assets/assets';
 
 const Main = ({navigation, route}) => {
-  const gif = assets.gif1;
+  const gif = assets.gif2;
   const color = '#e67e22';
   const buttonText = 'Add Item';
 
