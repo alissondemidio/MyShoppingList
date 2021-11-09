@@ -5,7 +5,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import LottieComponent from '../LottieComponent';
 import {getEntries} from '../../services/Entries';
 
-const Card = ({gif, color, buttonText, navigation, route}) => {
+const Card = ({gif, color, buttonText, navigation}) => {
   const [entries, setEntries] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -33,7 +33,7 @@ const Card = ({gif, color, buttonText, navigation, route}) => {
   return (
     <View style={styles.container}>
       <View style={styles.animation}>
-        <LottieComponent gif={gif} />
+        <LottieComponent gif={gif} loop={true} />
       </View>
       <FlatList
         data={entries}
