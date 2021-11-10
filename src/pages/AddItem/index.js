@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   cancelButton: {
     alignSelf: 'center',
   },
-  cancelText:{
+  cancelText: {
     color: colors.blue,
   },
   isValid: {
