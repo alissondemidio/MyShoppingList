@@ -5,12 +5,14 @@ import {useFocusEffect} from '@react-navigation/native';
 import LottieComponent from '../LottieComponent';
 import {getEntries} from '../../services/Entries';
 import Colors from '../../styles/Colors';
+import {useBalance} from '../../hooks';
 
 const colors = Colors;
 
 const Card = ({gif, buttonText, navigation}) => {
   const [entries, setEntries] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [balance] = useBalance();
 
   const loadEntries = async () => {
     const data = await getEntries();
@@ -77,7 +79,7 @@ const Card = ({gif, buttonText, navigation}) => {
       />
       <View style={styles.totalView}>
         <Text style={styles.total}>Total:</Text>
-        <Text style={styles.total}>R$ 7643.00</Text>
+        <Text style={styles.total}>R$ {balance}</Text>
       </View>
       <TouchableOpacity
         style={styles.button}
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   totalView: {
-    margin: 20,
+    margin: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
