@@ -15,8 +15,8 @@ const Main = ({navigation, route}) => {
     <View style={styles.container}>
       <View style={styles.pageHeader}>
         <PageHeader
-          title="Sua lista de compras"
-          subtitle="Adicione à lista itens que deseja comprar"
+          title="Meu Carrinho"
+          subtitle="Adicione ao carrinho itens que deseja comprar"
         />
       </View>
       <Card
