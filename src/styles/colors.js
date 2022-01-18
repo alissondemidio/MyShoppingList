@@ -27,6 +27,7 @@ const Colors = {
   primary: '#3498db',
   primaryLowOpacity: '#2ecc7133',
   secondary: '#2ecc71',
+  secondaryLowOpacity: '#f3727233',
   danger: '#f37272',
   light: '#ecf0f1',
   dark: '#34495e',

@@ -112,7 +112,7 @@ const AddItem = ({route, navigation}) => {
           </TouchableOpacity>
           {entry.id !== null && (
             <TouchableOpacity
-              style={[styles.button, styles.isValid]}
+              style={[styles.removeButton, styles.isValid]}
               onPress={onDelete}>
               <Text style={styles.buttonText}>Remover Produto</Text>
             </TouchableOpacity>
@@ -164,6 +164,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: colors.primaryLowOpacity,
   },
+  removeButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 80,
+    marginHorizontal: 10,
+    padding: 10,
+    height: 50,
+    marginTop: 10,
+    backgroundColor: colors.darkRed,
+  },
   buttonText: {
     fontSize: 14,
     fontWeight: 'bold',
@@ -177,6 +188,9 @@ const styles = StyleSheet.create({
   },
   isValid: {
     backgroundColor: colors.darkGreen,
+  },
+  isRValid: {
+    backgroundColor: colors.secondaryLowOpacity,
   },
   title: {
     fontSize: 18,
